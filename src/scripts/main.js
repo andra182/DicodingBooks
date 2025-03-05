@@ -75,7 +75,7 @@ function main() {
         return response.json();
       })
       .then((responseJson) => {
-        showResponseMessage(responseJson.message());
+        showResponseMessage(responseJson.message);
         getBook();
       })
       .catch((error) => {
