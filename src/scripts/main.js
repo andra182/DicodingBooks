@@ -33,7 +33,7 @@ function main() {
         return response.json();
       })
       .then((responseJson) => {
-        showResponseMessage(responseJson);
+        showResponseMessage(responseJson.message);
         getBook();
       })
       .catch((error) => {
@@ -55,7 +55,7 @@ function main() {
         return response.json();
       })
       .then((responseJson) => {
-        showResponseMessage(responseJson);
+        showResponseMessage(responseJson.message);
         getBook();
       })
       .catch((error) => {
@@ -65,23 +65,22 @@ function main() {
 
   const removeBook = (bookId) => {
     // tuliskan kode di sini!
-    const xhr = new XMLHttpRequest();
-
-    xhr.onload = function () {
-      const responseJson = JSON.parse(this.responseText);
-      showResponseMessage(responseJson.message);
-      getBook();
-    };
-
-    xhr.onerror = function () {
-      showResponseMessage();
-    };
-
-    xhr.open("DELETE", baseUrl + "/delete/" + bookId);
-
-    xhr.setRequestHeader("X-Auth-Token", "12345");
-
-    xhr.send();
+    fetch(baseUrl + "/delete/" + bookId, {
+      method: "DELETE",
+      headers: {
+        "X-Auth-Token": "12345",
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((responseJson) => {
+        showResponseMessage(responseJson.message());
+        getBook();
+      })
+      .catch((error) => {
+        showResponseMessage(error);
+      });
   };
 
   /*
